@@ -1,7 +1,9 @@
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FuncionarioService {
@@ -80,8 +82,61 @@ public class FuncionarioService {
 
   //Acredito que aqui sirva para a questão 3.5 e 3.6
   public static Map<String, List<Funcionario>> agruparPorFuncao(List<Funcionario> funcionarios) {
+    System.out.println("Agrupando por função...");
     System.out.println(funcionarios.stream().collect(Collectors.groupingBy(Funcionario::getFuncao)));
      return funcionarios.stream().collect(Collectors.groupingBy(Funcionario::getFuncao));
+  }
+
+  public static List<Funcionario> funcionariosComMesAniversario(List<Funcionario> funcionarios) {
+    System.out.println("Imprimindo funcionários que nasceram no mês 10 e 12...");
+    LocalDate hoje = LocalDate.now();
+    int mesAtual = hoje.getMonthValue();
+
+    List<Funcionario> imprimirComMesAniversario = funcionarios.stream()
+            .filter(funcionario -> funcionario.getDataNascimento().getMonthValue() == 10 || funcionario.getDataNascimento().getMonthValue() == 12)
+            .toList();
+    System.out.println(imprimirComMesAniversario);
+    return imprimirComMesAniversario;
+  }
+
+  public static Optional<Funcionario> funcionarioMaisVelho(List<Funcionario> funcionarios) {
+    System.out.println("Imprimindo funcionário mais velho...");
+    Optional<Funcionario> funcionarioMaisVelho = funcionarios.stream()
+            .max(Comparator.comparing(Funcionario::getDataNascimento).reversed());
+    System.out.println(funcionarioMaisVelho);
+    return funcionarioMaisVelho;
+  }
+
+  public static List<Funcionario> imprimirFuncionariosOrdenados(List<Funcionario> funcionarios) {
+    System.out.println("Imprimindo funcionários por ordem alfabética...");
+    List<Funcionario> funcionariosOrdenados = funcionarios.stream()
+            .sorted(Comparator.comparing(Funcionario::getNome))
+            .collect(Collectors.toList());
+
+    System.out.println(funcionariosOrdenados);
+
+    return funcionariosOrdenados;
+  }
+
+  public static BigDecimal totalSalarios(List<Funcionario> funcionarios) {
+    System.out.println("Imprimindo o total de salários...");
+    BigDecimal totalSalarios = funcionarios.stream()
+            .map(Funcionario::getSalario)
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+    System.out.println(totalSalarios);
+    return totalSalarios;
+  }
+
+  public static List<BigDecimal> imprimirSalariosMinimo(List<Funcionario> funcionarios) {
+    System.out.println("Imprimindo salários mínimos...");
+    BigDecimal salarioMinimo = new BigDecimal("1212.00");
+
+    List<BigDecimal> salariosMinimo = funcionarios.stream()
+            .map(funcionario -> funcionario.getSalario().divide(salarioMinimo, 2, BigDecimal.ROUND_HALF_UP))
+            .collect(Collectors.toList());
+    System.out.println(salarioMinimo);
+
+    return salariosMinimo;
   }
 
 

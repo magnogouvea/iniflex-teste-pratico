@@ -11,5 +11,10 @@ public class Principal {
     FuncionarioService.imprimirFuncionarios(funcionarios);
     FuncionarioService.atualizarSalario(funcionarios);
     FuncionarioService.agruparPorFuncao(funcionarios);
+    FuncionarioService.funcionariosComMesAniversario(funcionarios);
+    FuncionarioService.funcionarioMaisVelho(funcionarios);
+    FuncionarioService.imprimirFuncionariosOrdenados(funcionarios);
+    FuncionarioService.totalSalarios(funcionarios);
+    FuncionarioService.imprimirSalariosMinimo(funcionarios);
   }
 }
